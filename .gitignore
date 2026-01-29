@@ -1,0 +1,39 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Dependențe (nu le urca niciodată, sunt prea mari)
+node_modules/
+server/node_modules/
+
+# Build-uri de producție
+dist/
+build/
+
+# Variabile de mediu (parole, chei API)
+.env
+
+# Fișiere de sistem
+.DS_Store
+Thumbs.db
