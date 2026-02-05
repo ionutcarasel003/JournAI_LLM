@@ -9,6 +9,7 @@ import DiscoverPage from './DiscoverPage';
 import JournalPage from './JournalPage';
 import ProfilePage from './ProfilePage';
 import Footer from '../components/Footer';
+import logo from '../assets/logo.png';
 
 const Dashboard = ({ user, onLogout }) => {
   const [activeTab, setActiveTab] = useState('home'); 
@@ -42,12 +43,14 @@ const Dashboard = ({ user, onLogout }) => {
       <header className="sticky top-0 bg-white/80 backdrop-blur-xl shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] z-50 border-b border-gray-100/50 transition-all duration-300">
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
             
-            <div className="flex items-center gap-2 cursor-pointer group" onClick={() => setActiveTab('home')}>
-                <div className="w-10 h-10 bg-gradient-to-tr from-indigo-600 to-purple-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-500/20 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
-                    <Sparkles size={20} fill="currentColor" className="text-white/90" />
-                </div>
+            <div className="flex items-center gap-3 cursor-pointer group" onClick={() => setActiveTab('home')}>
+                <img 
+                    src={logo} 
+                    alt="Reflect Logo" 
+                    className="w-10 h-10 object-contain drop-shadow-md group-hover:scale-110 transition-transform duration-300" 
+                />
                 <span className="font-extrabold text-2xl tracking-tight text-gray-800 group-hover:text-indigo-600 transition-colors">
-                    Reflect
+                    Reflect.
                 </span>
             </div>
 

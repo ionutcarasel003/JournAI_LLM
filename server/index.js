@@ -12,7 +12,7 @@ app.use(express.json({ limit: '50mb' }));
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '',
+    password: 'admin',
     database: 'asistent_empatic'
 });
 
@@ -121,6 +121,18 @@ app.get('/api/moods/:userId', (req, res) => {
     db.query(sql, [req.params.userId], (err, results) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json(results);
+    });
+});
+
+app.delete('/api/moods/:id', (req, res) => {
+    const { id } = req.params;
+    const sql = 'DELETE FROM moods WHERE id = ?';
+    db.query(sql, [id], (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Eroare la ștergere' });
+        }
+        res.json({ message: 'Intrare ștearsă cu succes' });
     });
 });
 
