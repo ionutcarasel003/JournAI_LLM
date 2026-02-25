@@ -1,4 +1,3 @@
-
 # Asistent Empatic (Mental Wellness Platform)
 
 A comprehensive mental health management system built with Node.js API and React frontend, designed to help users track their emotions, access resources, and improve their well-being through gamification.
@@ -129,4 +128,3 @@ This project is licensed for educational purposes.
 ## 🏫 About Project
 
 **Asistent Empatic** is a project developed to demonstrate Full Stack capabilities using the SERN stack (SQL, Express, React, Node). It focuses on creating a user-centric application with real-world utility in mental health awareness.
->>>>>>> 38bc4a6b81e38c7af10e71142bdaf7e829c727eb
