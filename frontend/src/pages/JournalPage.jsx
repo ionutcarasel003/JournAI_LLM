@@ -6,7 +6,6 @@ import {
 } from 'lucide-react';
 import Button from '../components/Button';
 
-// Configurația stărilor
 const MOODS = [
   { score: 100, label: 'Excelent', icon: Sparkles, color: 'text-yellow-500', bg: 'bg-yellow-50', border: 'border-yellow-200', gradient: 'from-yellow-400 to-orange-500', advice: "Ești on fire! 🔥 Folosește energia asta pentru a crea ceva minunat azi." },
   { score: 75, label: 'Bine', icon: Smile, color: 'text-green-500', bg: 'bg-green-50', border: 'border-green-200', gradient: 'from-green-400 to-emerald-500', advice: "O zi bună e o fundație solidă. Menține ritmul!" },
@@ -18,22 +17,19 @@ const MOODS = [
 const TAGS = ["Familie", "Muncă", "Somn", "Sport", "Relație", "Sănătate", "Vreme", "Școală", "Creativitate", "Finanțe"];
 
 const JournalPage = ({ user }) => {
-  // State-uri principale
   const [selectedMood, setSelectedMood] = useState(50);
   const [activeTab, setActiveTab] = useState('journal');
   const [note, setNote] = useState('');
   const [gratitude, setGratitude] = useState('');
   const [selectedTags, setSelectedTags] = useState([]);
   
-  // State-uri date și UI
   const [recentEntries, setRecentEntries] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [isRecording, setIsRecording] = useState(false);
   const [aiInsight, setAiInsight] = useState('');
 
-  // State pentru MODAL (Fereastra de citire)
-  const [viewEntry, setViewEntry] = useState(null); // Dacă e null, fereastra e închisă
+  const [viewEntry, setViewEntry] = useState(null); 
 
   useEffect(() => {
     const moodObj = MOODS.find(m => m.score === selectedMood);
@@ -92,7 +88,7 @@ const JournalPage = ({ user }) => {
       });
 
       if (response.ok) {
-        fetchHistory(); // Reîncărcăm lista de la server pentru a avea ID-ul corect
+        fetchHistory(); 
         setNote('');
         setGratitude('');
         setSelectedTags([]);
@@ -105,9 +101,8 @@ const JournalPage = ({ user }) => {
     }
   };
 
-  // --- FUNCȚIE NOUĂ: Ștergere ---
   const handleDelete = async (e, entryId) => {
-    e.stopPropagation(); // Oprim click-ul să deschidă modalul
+    e.stopPropagation(); 
     
     if (!window.confirm("Ești sigur că vrei să ștergi această intrare?")) return;
 
@@ -131,21 +126,32 @@ const JournalPage = ({ user }) => {
     (entry.note || '').toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Funcție de curățare text pentru afișare
-  const parseEntryText = (fullText) => {
+const parseEntryText = (fullText) => {
       if (!fullText) return { tags: [], content: "" };
       
-      const tagMatch = fullText.match(/\[TAGS\]: (.*?)(\n|$)/);
-      const content = fullText.replace(/\[TAGS\]:.*|\[RECUNOȘTINȚĂ\]:.*|\[JURNAL\]:/gs, '').trim();
-      
-      const tags = tagMatch ? tagMatch[1].split(',').filter(t => t.trim() !== '') : [];
-      return { tags, content };
+      const tagMatch = fullText.match(/\[TAGS\]:\s*(.*?)(?=\n\[|$)/);
+      const tags = tagMatch && tagMatch[1] ? tagMatch[1].split(',').map(t => t.trim()).filter(t => t !== '') : [];
+
+      const journalMatch = fullText.match(/\[JURNAL\]:\s*(.*?)(?=\n\[|$)/s);
+      const journal = journalMatch && journalMatch[1] ? journalMatch[1].trim() : "";
+
+      const gratitudeMatch = fullText.match(/\[RECUNOȘTINȚĂ\]:\s*(.*?)(?=\n\[|$)/s);
+      const gratitude = gratitudeMatch && gratitudeMatch[1] ? gratitudeMatch[1].trim() : "";
+
+      let finalContent = "";
+      if (journal) finalContent += journal;
+      if (gratitude) finalContent += (finalContent ? "\n\n" : "") + gratitude;
+
+      if (!journal && !gratitude) {
+          finalContent = fullText.replace(/\[TAGS\]:.*?\n/, '').trim();
+      }
+
+      return { tags, content: finalContent };
   };
 
   return (
     <div className="min-h-screen pb-20 animate-fade-in transition-colors duration-700 ease-in-out relative">
       
-      {/* HEADER */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
         <div>
           <h2 className="text-3xl font-extrabold text-gray-800 tracking-tight">Jurnalul Tău</h2>
@@ -165,9 +171,7 @@ const JournalPage = ({ user }) => {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         
-        {/* EDITOR (Stânga) */}
         <div className="lg:col-span-8 space-y-6">
-          {/* Mood Selector */}
           <div className="bg-white/80 backdrop-blur-xl p-6 rounded-[2rem] shadow-xl shadow-gray-200/50 border border-white">
             <div className="flex justify-between items-center mb-6">
                 <h3 className="font-bold text-gray-700 text-lg">Cum te simți acum?</h3>
@@ -204,7 +208,6 @@ const JournalPage = ({ user }) => {
             </div>
           </div>
 
-          {/* Text Editor */}
           <div className="bg-white p-1 rounded-[2.5rem] shadow-sm border border-gray-100">
              <div className="flex p-2 gap-2 bg-gray-50/50 rounded-[2.3rem] mb-4 mx-2 mt-2">
                 <button 
@@ -283,7 +286,6 @@ const JournalPage = ({ user }) => {
           </div>
         </div>
 
-        {/* ISTORIC (Dreapta) */}
         <div className="lg:col-span-4 space-y-6">
           <div className="bg-white p-6 rounded-[2rem] shadow-lg shadow-gray-100 border border-gray-100 h-[calc(100vh-140px)] sticky top-24 flex flex-col">
              <div className="flex items-center justify-between mb-6">
@@ -331,7 +333,6 @@ const JournalPage = ({ user }) => {
                                 </span>
                              </div>
                              
-                             {/* BUTON ȘTERGERE */}
                              <button 
                                 onClick={(e) => handleDelete(e, entry.id)}
                                 className="opacity-0 group-hover:opacity-100 p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
@@ -354,12 +355,10 @@ const JournalPage = ({ user }) => {
 
       </div>
 
-      {/* === MODAL CITIRE === */}
       {viewEntry && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/30 backdrop-blur-sm animate-fade-in">
             <div className="bg-white w-full max-w-2xl max-h-[85vh] rounded-[2rem] shadow-2xl overflow-hidden flex flex-col animate-scale-up">
                 
-                {/* Modal Header */}
                 <div className={`p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50/50`}>
                     <div className="flex items-center gap-3">
                         <div className={`p-3 rounded-2xl ${MOODS.find(m => m.score === viewEntry.score)?.bg || 'bg-gray-100'}`}>
@@ -382,9 +381,7 @@ const JournalPage = ({ user }) => {
                     </button>
                 </div>
 
-                {/* Modal Content */}
                 <div className="p-8 overflow-y-auto custom-scrollbar bg-white">
-                    {/* Tags */}
                     {parseEntryText(viewEntry.note).tags.length > 0 && (
                         <div className="flex flex-wrap gap-2 mb-6">
                             {parseEntryText(viewEntry.note).tags.map((tag, i) => (
@@ -395,13 +392,11 @@ const JournalPage = ({ user }) => {
                         </div>
                     )}
 
-                    {/* Textul propriu-zis */}
                     <div className="prose prose-lg text-gray-700 leading-relaxed whitespace-pre-wrap">
                         {parseEntryText(viewEntry.note).content}
                     </div>
                 </div>
 
-                {/* Modal Footer */}
                 <div className="p-4 border-t border-gray-100 bg-gray-50 flex justify-end">
                     <button 
                         onClick={() => setViewEntry(null)}

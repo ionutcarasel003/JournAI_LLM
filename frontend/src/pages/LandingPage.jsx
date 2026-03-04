@@ -20,7 +20,7 @@ const LandingPage = ({ onLogin }) => {
     e.preventDefault();
     setError('');
     setLoading(true);
-    const endpoint = isLoginMode ? '/api/login' : '/api/register';
+    const endpoint = isLoginMode ? '/api/auth/login' : '/api/auth/register';
     
     try {
       await new Promise(r => setTimeout(r, 800)); 
