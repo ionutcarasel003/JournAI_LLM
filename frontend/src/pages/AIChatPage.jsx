@@ -1,12 +1,5 @@
 import React, { useMemo, useRef, useState, useEffect } from "react";
-import {
-  Bot,
-  Send,
-  ShieldAlert,
-  ShieldCheck,
-  ShieldQuestion,
-  Loader2,
-} from "lucide-react";
+import { Bot, Send, Loader2 } from "lucide-react";
 import Button from "../components/Button";
 
 const API_URL = "http://localhost:3000/api/ai/analyze";
@@ -16,9 +9,7 @@ const AIChatPage = ({ user }) => {
     {
       id: 1,
       sender: "bot",
-      text: `Salut${user?.email ? `, ${user.email}` : ""}! Cum ți-a fost ziua?.`,
-      riskLevel: null,
-      probabilities: null,
+      text: `Salut${user?.email ? `, ${user.email}` : ""}! Cum ți-a fost ziua?`,
     },
   ]);
 
@@ -30,34 +21,15 @@ const AIChatPage = ({ user }) => {
     messagesEndRef.current?.scrollIntoView({ block: "nearest" });
   }, [messages, loading]);
 
-  const canSend = useMemo(
-    () => input.trim().length > 0 && !loading,
-    [input, loading],
-  );
+  const canSend = useMemo(() => {
+    return input.trim().length > 0 && !loading;
+  }, [input, loading]);
 
   const buildBotReply = (data) => {
-    const risk = data?.risk_level || "unknown";
-    const probabilities = data?.probabilities || null;
-
-    let responseText = "Analiza a fost finalizată.";
-
-    if (risk === "high") {
-      responseText =
-        "Analiza a fost finalizată. Mesajul trimis indică un nivel de risc ridicat.";
-    } else if (risk === "medium") {
-      responseText =
-        "Analiza a fost finalizată. Mesajul trimis indică un nivel de risc mediu.";
-    } else if (risk === "low") {
-      responseText =
-        "Analiza a fost finalizată. Mesajul trimis indică un nivel de risc scăzut.";
-    }
-
     return {
       id: Date.now() + Math.random(),
       sender: "bot",
-      text: responseText,
-      riskLevel: risk,
-      probabilities,
+      text: data?.reply || "Am analizat mesajul tău.",
     };
   };
 
@@ -99,8 +71,6 @@ const AIChatPage = ({ user }) => {
           id: Date.now() + Math.random(),
           sender: "bot",
           text: "Nu am putut analiza mesajul acum. Verifică backend-ul și încearcă din nou.",
-          riskLevel: null,
-          probabilities: null,
         },
       ]);
     } finally {
@@ -199,75 +169,7 @@ const ChatBubble = ({ message }) => {
         <div className="text-sm leading-relaxed whitespace-pre-wrap">
           {message.text}
         </div>
-
-        {!isUser && message.riskLevel && (
-          <div className="mt-3">
-            <RiskBadge riskLevel={message.riskLevel} />
-          </div>
-        )}
-
-        {!isUser && message.probabilities && (
-          <div className="mt-3 grid grid-cols-3 gap-2">
-            <ProbabilityCard label="Low" value={message.probabilities.low} />
-            <ProbabilityCard
-              label="Medium"
-              value={message.probabilities.medium}
-            />
-            <ProbabilityCard label="High" value={message.probabilities.high} />
-          </div>
-        )}
       </div>
-    </div>
-  );
-};
-
-const RiskBadge = ({ riskLevel }) => {
-  const config = {
-    low: {
-      label: "Low Risk",
-      className: "bg-green-50 text-green-700 border-green-200",
-      icon: ShieldCheck,
-    },
-    medium: {
-      label: "Medium Risk",
-      className: "bg-yellow-50 text-yellow-700 border-yellow-200",
-      icon: ShieldQuestion,
-    },
-    high: {
-      label: "High Risk",
-      className: "bg-red-50 text-red-700 border-red-200",
-      icon: ShieldAlert,
-    },
-  };
-
-  const current = config[riskLevel] || {
-    label: "Unknown",
-    className: "bg-gray-50 text-gray-600 border-gray-200",
-    icon: ShieldQuestion,
-  };
-
-  const Icon = current.icon;
-
-  return (
-    <div
-      className={`inline-flex items-center gap-2 px-3 py-2 rounded-2xl border text-xs font-bold uppercase tracking-wide ${current.className}`}
-    >
-      <Icon size={14} />
-      {current.label}
-    </div>
-  );
-};
-
-const ProbabilityCard = ({ label, value }) => {
-  const percentage =
-    value !== undefined && value !== null
-      ? `${(Number(value) * 100).toFixed(1)}%`
-      : "-";
-
-  return (
-    <div className="bg-gray-50 rounded-2xl border border-gray-100 px-3 py-2 text-center">
-      <p className="text-[11px] uppercase font-bold text-gray-400">{label}</p>
-      <p className="text-sm font-bold text-gray-700 mt-1">{percentage}</p>
     </div>
   );
 };
