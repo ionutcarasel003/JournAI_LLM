@@ -1,0 +1,5 @@
+torch
+transformers
+safetensors
+
+#python -m pip install torch transformers safetensors 
