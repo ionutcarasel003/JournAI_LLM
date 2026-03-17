@@ -5,6 +5,8 @@ import Button from "../components/Button";
 const API_URL = "http://localhost:3000/api/ai/analyze";
 
 const AIChatPage = ({ user }) => {
+  const [sessionId, setSessionId] = useState(null);
+
   const [messages, setMessages] = useState([
     {
       id: 1,
@@ -20,6 +22,12 @@ const AIChatPage = ({ user }) => {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ block: "nearest" });
   }, [messages, loading]);
+
+  useEffect(() => {
+    if (user?.id && !sessionId) {
+      createNewSession();
+    }
+  }, [user, sessionId]);
 
   const canSend = useMemo(() => {
     return input.trim().length > 0 && !loading;
@@ -53,7 +61,11 @@ const AIChatPage = ({ user }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ text: trimmed }),
+        body: JSON.stringify({
+          text: trimmed,
+          session_id: sessionId,
+          user_id: user.id,
+        }),
       });
 
       const data = await response.json();
@@ -82,6 +94,31 @@ const AIChatPage = ({ user }) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSend();
+    }
+  };
+
+  const createNewSession = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/chat/sessions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: user.id,
+          title: "New Chat",
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data?.message || "Nu s-a putut crea sesiunea.");
+      }
+
+      setSessionId(data.id);
+    } catch (error) {
+      console.error("Eroare la createNewSession:", error);
     }
   };
 
