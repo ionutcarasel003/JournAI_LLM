@@ -73,12 +73,6 @@ def predict_risk_long_text(text):
     p_medium = scores.get("medium_risk", 0.0)
     p_high = scores.get("high_risk", 0.0)
 
-    print("---- MODEL DEBUG ----")
-    print("LOW:", p_low)
-    print("MEDIUM:", p_medium)
-    print("HIGH:", p_high)
-    print("PREDICTED:", pred_label)
-
     return {
     "risk_level": pred_label,
     "probabilities": {

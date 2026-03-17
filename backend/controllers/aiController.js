@@ -2,6 +2,12 @@ const { execFile } = require("child_process");
 const path = require("path");
 const { getSQLiteDB } = require("../config/sqlite");
 
+const buildSessionTitle = (text) => {
+  const clean = text.replace(/\s+/g, " ").trim();
+  if (!clean) return "New Chat";
+  return clean.length > 40 ? clean.slice(0, 40) + "..." : clean;
+};
+
 const analyzeRisk = async (req, res) => {
   try {
     const { text, session_id, user_id } = req.body;
@@ -16,19 +22,37 @@ const analyzeRisk = async (req, res) => {
 
     const db = getSQLiteDB();
 
-    await db.run(
-      `INSERT INTO messages (session_id, user_id, role, content) VALUES (?, ?, ?, ?)`,
-      [session_id, user_id, "user", text]
-    );
+    const trimmedText = text.trim();
 
     await db.run(
-      `UPDATE chat_sessions SET updated_at = CURRENT_TIMESTAMP WHERE id = ?`,
+      `INSERT INTO messages (session_id, user_id, role, content) VALUES (?, ?, ?, ?)`,
+      [session_id, user_id, "user", trimmedText]
+    );
+
+    const existingCount = await db.get(
+      `SELECT COUNT(*) as count FROM messages WHERE session_id = ?`,
       [session_id]
     );
 
+    if (existingCount.count === 1) {
+      const generatedTitle = buildSessionTitle(trimmedText);
+
+      await db.run(
+        `UPDATE chat_sessions
+         SET title = ?, updated_at = CURRENT_TIMESTAMP
+         WHERE id = ?`,
+        [generatedTitle, session_id]
+      );
+    } else {
+      await db.run(
+        `UPDATE chat_sessions SET updated_at = CURRENT_TIMESTAMP WHERE id = ?`,
+        [session_id]
+      );
+    }
+
     const scriptPath = path.join(__dirname, "../initializer/initRiskLevel.py");
 
-    execFile("python", [scriptPath, text], async (error, stdout, stderr) => {
+    execFile("python", [scriptPath, trimmedText], async (error, stdout, stderr) => {
       if (stderr) {
         console.error(stderr);
       }
@@ -46,7 +70,7 @@ const analyzeRisk = async (req, res) => {
         const result = JSON.parse(stdout);
 
         console.log("Text primit de la frontend:");
-        console.log(text);
+        console.log(trimmedText);
 
         console.log("Risk level detectat:");
         console.log(result.risk_level);

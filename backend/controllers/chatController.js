@@ -12,12 +12,12 @@ const createSession = async (req, res) => {
 
     const result = await db.run(
       `INSERT INTO chat_sessions (user_id, title) VALUES (?, ?)`,
-      [user_id, title || "New Chat"]
+      [user_id, title || "New Chat"],
     );
 
     const newSession = await db.get(
       `SELECT * FROM chat_sessions WHERE id = ?`,
-      [result.lastID]
+      [result.lastID],
     );
 
     return res.status(201).json(newSession);
@@ -33,8 +33,18 @@ const getSessionsByUser = async (req, res) => {
     const db = getSQLiteDB();
 
     const sessions = await db.all(
-      `SELECT * FROM chat_sessions WHERE user_id = ? ORDER BY updated_at DESC`,
-      [userId]
+      `
+      SELECT cs.*
+      FROM chat_sessions cs
+      WHERE cs.user_id = ?
+        AND EXISTS (
+          SELECT 1
+          FROM messages m
+          WHERE m.session_id = cs.id
+        )
+      ORDER BY cs.updated_at DESC
+      `,
+      [userId],
     );
 
     return res.json(sessions);
@@ -51,7 +61,7 @@ const getMessagesBySession = async (req, res) => {
 
     const messages = await db.all(
       `SELECT * FROM messages WHERE session_id = ? ORDER BY created_at ASC`,
-      [sessionId]
+      [sessionId],
     );
 
     return res.json(messages);
@@ -73,18 +83,17 @@ const saveMessage = async (req, res) => {
 
     const result = await db.run(
       `INSERT INTO messages (session_id, user_id, role, content) VALUES (?, ?, ?, ?)`,
-      [session_id, user_id, role, content]
+      [session_id, user_id, role, content],
     );
 
     await db.run(
       `UPDATE chat_sessions SET updated_at = CURRENT_TIMESTAMP WHERE id = ?`,
-      [session_id]
+      [session_id],
     );
 
-    const newMessage = await db.get(
-      `SELECT * FROM messages WHERE id = ?`,
-      [result.lastID]
-    );
+    const newMessage = await db.get(`SELECT * FROM messages WHERE id = ?`, [
+      result.lastID,
+    ]);
 
     return res.status(201).json(newMessage);
   } catch (error) {
