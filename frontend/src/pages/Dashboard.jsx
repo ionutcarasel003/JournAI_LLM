@@ -8,34 +8,35 @@ import HomePage from './HomePage';
 import DiscoverPage from './DiscoverPage';
 import JournalPage from './JournalPage';
 import ProfilePage from './ProfilePage';
+import AIChatPage from './AIChatPage';
 import Footer from '../components/Footer';
 import logo from '../assets/logo.png';
 
 const Dashboard = ({ user, onLogout }) => {
   const [activeTab, setActiveTab] = useState('home'); 
 
-  const renderChat = () => (
-    <div className="flex flex-col h-[70vh] justify-center items-center text-center animate-fade-in p-4">
-      <div className="bg-white p-10 rounded-[2.5rem] shadow-2xl shadow-purple-500/10 border border-white/60 relative overflow-hidden max-w-md w-full backdrop-blur-xl">
-        <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
-        <div className="absolute -right-10 -top-10 w-32 h-32 bg-purple-100 rounded-full blur-3xl opacity-60"></div>
+//   const renderChat = () => (
+//     <div className="flex flex-col h-[70vh] justify-center items-center text-center animate-fade-in p-4">
+//       <div className="bg-white p-10 rounded-[2.5rem] shadow-2xl shadow-purple-500/10 border border-white/60 relative overflow-hidden max-w-md w-full backdrop-blur-xl">
+//         <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
+//         <div className="absolute -right-10 -top-10 w-32 h-32 bg-purple-100 rounded-full blur-3xl opacity-60"></div>
         
-        <div className="relative z-10">
-            <div className="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6 text-calm-primary border border-gray-100 shadow-inner">
-                <Bot className="w-10 h-10" />
-            </div>
-            <h3 className="text-2xl font-bold text-gray-800 mb-3">AI Companion</h3>
-            <p className="text-gray-500 leading-relaxed mb-6">
-                Antrenăm modelul nostru de empatie pentru a-ți oferi conversații profunde și suport emoțional real.
-            </p>
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-full text-xs font-bold text-gray-600 uppercase tracking-wider">
-                <span className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></span>
-                În dezvoltare
-            </div>
-        </div>
-      </div>
-    </div>
-  );
+//         <div className="relative z-10">
+//             <div className="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6 text-calm-primary border border-gray-100 shadow-inner">
+//                 <Bot className="w-10 h-10" />
+//             </div>
+//             <h3 className="text-2xl font-bold text-gray-800 mb-3">AI Companion</h3>
+//             <p className="text-gray-500 leading-relaxed mb-6">
+//                 Antrenăm modelul nostru de empatie pentru a-ți oferi conversații profunde și suport emoțional real.
+//             </p>
+//             <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-full text-xs font-bold text-gray-600 uppercase tracking-wider">
+//                 <span className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></span>
+//                 În dezvoltare
+//             </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
 
   return (
     <div className="min-h-screen bg-[#f8fafc] flex flex-col font-sans selection:bg-calm-primary selection:text-white">
@@ -80,7 +81,7 @@ const Dashboard = ({ user, onLogout }) => {
             {activeTab === 'discover' && <DiscoverPage />}
             {activeTab === 'journal' && <JournalPage user={user} />}
             {activeTab === 'profile' && <ProfilePage user={user} onLogout={onLogout} />}
-            {activeTab === 'chat' && renderChat()}
+            {activeTab === 'chat' && <AIChatPage user={user} />}
         </div>
       </main>
 <Footer />

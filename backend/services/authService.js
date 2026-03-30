@@ -27,7 +27,36 @@ const authService = {
                 resolve({ user: safeUser, token });
             });
         });
-    }
+    },
+
+     register: async (email, password) => {
+        return new Promise((resolve, reject) => {
+            const checkSql = 'SELECT * FROM users WHERE email = ?';
+
+            db.query(checkSql, [email], async (err, results) => {
+                if (err) return reject({ status: 500, message: "Eroare baza de date" });
+                if (results.length > 0) {
+                    return reject({ status: 409, message: "Emailul este deja folosit" });
+                }
+
+                try {
+                    const hashedPassword = await bcrypt.hash(password, 10);
+                    const insertSql = 'INSERT INTO users (email, password) VALUES (?, ?)';
+
+                    db.query(insertSql, [email, hashedPassword], (err, result) => {
+                        if (err) return reject({ status: 500, message: "Eroare la crearea contului" });
+
+                        resolve({
+                            message: "Cont creat cu succes",
+                            userId: result.insertId
+                        });
+                    });
+                } catch (error) {
+                    reject({ status: 500, message: "Eroare la hash-uirea parolei" });
+                }
+            });
+        });
+    },
 };
 
 module.exports = authService;
