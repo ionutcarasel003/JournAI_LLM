@@ -3,34 +3,28 @@ const cors = require('cors');
 
 const authRoutes = require('./routes/authRoutes');
 const moodRoutes = require('./routes/moodRoutes');
-const aiRoutes = require("./routes/aiRoutes");
-const chatRoutes = require("./routes/chatRoutes");
+const emotionRoutes = require('./routes/emotionRoutes');
+const chatRoutes = require('./routes/chatRoutes');
+const aiRoutes = require('./routes/aiRoutes');
+const { initSQLite } = require('./config/sqlite');
 
 const app = express();
 
-const { initSQLite } = require("./config/sqlite");
-
 app.use(cors());
-app.use(express.json()); 
-
+app.use(express.json());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/moods', moodRoutes);
-app.use("/api/ai", aiRoutes);
-app.use("/api/chat", chatRoutes);
+app.use('/api/emotions', emotionRoutes);
+app.use('/api/chat', chatRoutes);
+app.use('/api/ai', aiRoutes);
 
 const PORT = 3000;
 
-async function startServer() {
-  try {
-    await initSQLite();
-
+initSQLite().then(() => {
     app.listen(PORT, () => {
-      console.log(`🚀 Serverul backend rulează pe portul ${PORT}`);
+        console.log(`🚀 Serverul backend rulează pe portul ${PORT}`);
     });
-  } catch (error) {
-    console.error("Eroare la pornirea serverului:", error);
-  }
-}
-
-startServer();
+}).catch(err => {
+    console.error("❌ Eroare la inițializarea SQLite:", err);
+});

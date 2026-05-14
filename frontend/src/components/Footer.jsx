@@ -18,14 +18,14 @@ const Footer = () => {
             <h4 className="font-bold text-gray-900 text-lg">Reflect</h4>
         </div>
     <p className="text-sm text-gray-500 max-w-xs leading-relaxed">
-        Spațiul tău digital pentru claritate, echilibru și creștere interioară.
+        Your digital space for clarity, balance, and inner growth.
     </p>
 </div>
 
           <div className="flex gap-8 text-sm font-medium text-gray-600">
-            <button className="hover:text-indigo-600 transition-colors">Manifest</button>
-            <button className="hover:text-indigo-600 transition-colors">Confidențialitate</button>
-            <button className="hover:text-indigo-600 transition-colors">Ajutor</button>
+            <button className="hover:text-indigo-600 transition-colors">Manifesto</button>
+            <button className="hover:text-indigo-600 transition-colors">Privacy</button>
+            <button className="hover:text-indigo-600 transition-colors">Help</button>
           </div>
 
           <div className="flex gap-3">
@@ -35,8 +35,8 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-gray-100 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-400">
-          <p>&copy; {new Date().getFullYear()} Reflect App. Toate drepturile rezervate.</p>
-          <p>Dezvoltat cu ❤️ pentru sănătatea mentală.</p>
+          <p>&copy; {new Date().getFullYear()} Reflect App. All rights reserved.</p>
+          <p>Developed with ❤️ for mental health.</p>
         </div>
       </div>
     </footer>

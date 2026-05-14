@@ -6,7 +6,7 @@ const authController = {
             const { email, password } = req.body;
 
             if (!email || !password) {
-                return res.status(400).json({ error: "Email și parolă obligatorii!" });
+                return res.status(400).json({ error: "Email and password are required!" });
             }
 
             const result = await authService.login(email, password);
@@ -24,7 +24,7 @@ const authController = {
             const { email, password } = req.body;
 
             if (!email || !password) {
-                return res.status(400).json({ error: "Email și parolă obligatorii!" });
+                return res.status(400).json({ error: "Email and password are required!" });
             }
 
             const result = await authService.register(email, password);

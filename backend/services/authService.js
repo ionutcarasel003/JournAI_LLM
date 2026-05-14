@@ -12,13 +12,13 @@ const authService = {
             const sql = 'SELECT * FROM users WHERE email = ?';
             
             db.query(sql, [email], async (err, results) => {
-                if (err) return reject({ status: 500, message: "Eroare baza de date" });
-                if (results.length === 0) return reject({ status: 401, message: "Email sau parolă greșită" });
+                if (err) return reject({ status: 500, message: "Database error" });
+                if (results.length === 0) return reject({ status: 401, message: "Invalid email or password" });
 
                 const user = results[0];
 
                 const isMatch = await bcrypt.compare(password, user.password);
-                if (!isMatch) return reject({ status: 401, message: "Email sau parolă greșită" });
+                if (!isMatch) return reject({ status: 401, message: "Invalid email or password" });
 
                 const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, { expiresIn: '24h' });
 
@@ -34,9 +34,9 @@ const authService = {
             const checkSql = 'SELECT * FROM users WHERE email = ?';
 
             db.query(checkSql, [email], async (err, results) => {
-                if (err) return reject({ status: 500, message: "Eroare baza de date" });
+                if (err) return reject({ status: 500, message: "Database error" });
                 if (results.length > 0) {
-                    return reject({ status: 409, message: "Emailul este deja folosit" });
+                    return reject({ status: 409, message: "Email is already in use" });
                 }
 
                 try {
@@ -44,15 +44,15 @@ const authService = {
                     const insertSql = 'INSERT INTO users (email, password) VALUES (?, ?)';
 
                     db.query(insertSql, [email, hashedPassword], (err, result) => {
-                        if (err) return reject({ status: 500, message: "Eroare la crearea contului" });
+                        if (err) return reject({ status: 500, message: "Error creating account" });
 
                         resolve({
-                            message: "Cont creat cu succes",
+                            message: "Account successfully created",
                             userId: result.insertId
                         });
                     });
                 } catch (error) {
-                    reject({ status: 500, message: "Eroare la hash-uirea parolei" });
+                    reject({ status: 500, message: "Error hashing password" });
                 }
             });
         });

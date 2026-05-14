@@ -56,7 +56,7 @@ const DiscoverPage = () => {
       const data = await response.json();
       setSearchResults(data.items || []);
     } catch (error) {
-      console.error("Eroare:", error);
+      console.error("Error:", error);
     } finally {
       setLoading(false);
     }
@@ -71,11 +71,11 @@ const DiscoverPage = () => {
 
   const handleSearchAction = () => {
     if (activeCategory === 'psych') {
-        const q = city ? `psihologi buni in ${city}` : 'psihoterapeut online';
+        const q = city ? `good psychologists in ${city}` : 'online psychotherapist';
         window.open(`https://www.google.com/maps/search/${encodeURIComponent(q)}`, '_blank');
     }
     if (activeCategory === 'media') {
-        window.open(`https://www.google.com/search?q=${encodeURIComponent("relaxare " + searchQuery)}&tbm=vid`, '_blank');
+        window.open(`https://www.google.com/search?q=${encodeURIComponent("relaxation " + searchQuery)}&tbm=vid`, '_blank');
     }
     if (activeCategory === 'books') {
         searchBooks();
@@ -90,11 +90,11 @@ const DiscoverPage = () => {
     <div className="space-y-6 animate-fade-in pb-20">
       
       <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 sticky top-20 z-10">
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">Descoperă Resurse</h2>
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">Discover Resources</h2>
         
         <div className="flex flex-wrap gap-2 mb-6">
-          <CategoryButton active={activeCategory === 'books'} onClick={() => handleCategoryChange('books')} icon={Book} label="Cărți" />
-          <CategoryButton active={activeCategory === 'psych'} onClick={() => handleCategoryChange('psych')} icon={UserCheck} label="Specialiști" />
+          <CategoryButton active={activeCategory === 'books'} onClick={() => handleCategoryChange('books')} icon={Book} label="Books" />
+          <CategoryButton active={activeCategory === 'psych'} onClick={() => handleCategoryChange('psych')} icon={UserCheck} label="Specialists" />
           <CategoryButton active={activeCategory === 'media'} onClick={() => handleCategoryChange('media')} icon={PlayCircle} label="Media" />
         </div>
 
@@ -104,9 +104,9 @@ const DiscoverPage = () => {
                 <input 
                     type="text" 
                     placeholder={
-                        activeCategory === 'books' ? "Caută o carte..." :
-                        activeCategory === 'psych' ? "Introdu orașul tău..." :
-                        "Caută muzică sau video..."
+                        activeCategory === 'books' ? "Search for a book..." :
+                        activeCategory === 'psych' ? "Enter your city..." :
+                        "Search for music or video..."
                     }
                     className="w-full pl-12 pr-4 py-3 bg-gray-50 rounded-xl border-none focus:ring-2 focus:ring-calm-primary outline-none"
                     value={activeCategory === 'psych' ? city : searchQuery}
@@ -115,7 +115,7 @@ const DiscoverPage = () => {
                 />
             </div>
             <Button onClick={handleSearchAction}>
-                {activeCategory === 'books' ? 'Caută' : 'Găsește'}
+                {activeCategory === 'books' ? 'Search' : 'Find'}
             </Button>
         </div>
       </div>
@@ -124,21 +124,21 @@ const DiscoverPage = () => {
       <div className="flex items-center gap-2 mb-2">
           <Star className="w-5 h-5 text-yellow-400 fill-yellow-400" />
           <h3 className="font-bold text-gray-700">
-              {searchResults.length > 0 ? 'Rezultate Căutare' : 'Recomandările Noastre'}
+              {searchResults.length > 0 ? 'Search Results' : 'Our Recommendations'}
           </h3>
       </div>
 
-      {loading && <div className="text-center py-10"><Loader className="animate-spin inline text-calm-primary"/> Se caută...</div>}
+      {loading && <div className="text-center py-10"><Loader className="animate-spin inline text-calm-primary"/> Searching...</div>}
 
       {activeCategory === 'books' && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
               {(searchResults.length > 0 ? searchResults : RECOMMENDATIONS.books).map((book, i) => {
                   const isApi = !!book.volumeInfo;
                   const title = isApi ? book.volumeInfo.title : book.title;
-                  const author = isApi ? (book.volumeInfo.authors?.[0] || 'Autor necunoscut') : book.author;
+                  const author = isApi ? (book.volumeInfo.authors?.[0] || 'Unknown author') : book.author;
                   const img = isApi ? (book.volumeInfo.imageLinks?.thumbnail || 'https://via.placeholder.com/150') : book.img;
                   const link = isApi ? book.volumeInfo.previewLink : book.link;
-                  const category = isApi ? 'Carte' : book.type;
+                  const category = isApi ? 'Book' : book.type;
 
                   return (
                       <div key={i} className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex gap-4 hover:shadow-md transition group">
@@ -150,7 +150,7 @@ const DiscoverPage = () => {
                                   <p className="text-xs text-gray-500">{author}</p>
                               </div>
                               <a href={link} target="_blank" className="text-xs font-bold text-calm-primary flex items-center gap-1 hover:underline mt-2">
-                                  Vezi detalii <ExternalLink size={12}/>
+                                  View details <ExternalLink size={12}/>
                               </a>
                           </div>
                       </div>
@@ -173,7 +173,7 @@ const DiscoverPage = () => {
                           <span className="text-[10px] bg-green-50 text-green-700 px-2 py-1 rounded-full font-semibold">{item.type}</span>
                       </div>
                       <a href={item.link} target="_blank" className="mt-4 block w-full text-center py-2 bg-gray-50 rounded-xl text-sm font-semibold text-gray-600 hover:bg-calm-primary hover:text-white transition">
-                          Vizitează Site
+                          Visit Site
                       </a>
                   </div>
               ))}
