@@ -29,7 +29,7 @@ const ProfilePage = ({ user, onLogout }) => {
         const moodData = await moodRes.json();
         setMoodHistory(moodData);
       } catch (error) {
-        console.error("Eroare:", error);
+        console.error("Error:", error);
       } finally {
         setLoading(false);
       }
@@ -53,8 +53,8 @@ const ProfilePage = ({ user, onLogout }) => {
                 body: JSON.stringify({ avatar: base64Image })
             });
         } catch (error) {
-            console.error("Eroare upload:", error);
-            alert("Nu s-a putut salva poza.");
+            console.error("Upload error:", error);
+            alert("Could not save the photo.");
         }
     };
     reader.readAsDataURL(file);
@@ -68,11 +68,11 @@ const ProfilePage = ({ user, onLogout }) => {
     let currentXP = totalEntries * 10; 
     
     const badges = [
-      { id: 1, label: 'Primul Pas', icon: '🌱', threshold: 1, rewardXP: 50, desc: 'Prima intrare în jurnal' },
-      { id: 2, label: 'Consecvent', icon: '🔥', threshold: 5, rewardXP: 100, desc: 'Ai scris de 5 ori' },
-      { id: 3, label: 'Jurnalist', icon: '✍️', threshold: 10, rewardXP: 200, desc: '10 intrări în jurnal' },
-      { id: 4, label: 'Zen Master', icon: '🧘', threshold: 20, rewardXP: 500, desc: '20 de momente de mindfulness' },
-      { id: 5, label: 'Veteran', icon: '👑', threshold: 50, rewardXP: 1000, desc: 'Un adevărat maestru al emoțiilor' }
+      { id: 1, label: 'First Step', icon: '🌱', threshold: 1, rewardXP: 50, desc: 'First journal entry' },
+      { id: 2, label: 'Consistent', icon: '🔥', threshold: 5, rewardXP: 100, desc: 'You wrote 5 times' },
+      { id: 3, label: 'Journalist', icon: '✍️', threshold: 10, rewardXP: 200, desc: '10 journal entries' },
+      { id: 4, label: 'Zen Master', icon: '🧘', threshold: 20, rewardXP: 500, desc: '20 mindfulness moments' },
+      { id: 5, label: 'Veteran', icon: '👑', threshold: 50, rewardXP: 1000, desc: 'A true master of emotions' }
     ];
 
     badges.forEach(badge => {
@@ -81,7 +81,7 @@ const ProfilePage = ({ user, onLogout }) => {
 
     const level = Math.floor(currentXP / 150) + 1;
     const progressToNextLevel = Math.min(((currentXP % 150) / 150) * 100, 100);
-    const nextBadge = badges.find(b => totalEntries < b.threshold) || { label: 'Ai terminat jocul!', threshold: totalEntries };
+    const nextBadge = badges.find(b => totalEntries < b.threshold) || { label: 'You finished the game!', threshold: totalEntries };
     const entriesNeeded = nextBadge.threshold - totalEntries;
 
     return { totalEntries, avgMood, badges, currentXP, level, progressToNextLevel, entriesNeeded };
@@ -137,21 +137,21 @@ const ProfilePage = ({ user, onLogout }) => {
                 )}
                 <p className="text-gray-500 text-sm">{user.email}</p>
                 <p className="text-xs text-calm-primary mt-1 flex items-center justify-center md:justify-start gap-1">
-                    <Camera size={10} /> Apasă pe poză pentru a o schimba
+                    <Camera size={10} /> Click on the photo to change it
                 </p>
              </div>
 
              <div className="text-center bg-gray-50 px-4 py-2 rounded-xl">
-                 <p className="text-xs text-gray-400 font-bold uppercase">Total Experiență</p>
+                 <p className="text-xs text-gray-400 font-bold uppercase">Total Experience</p>
                  <p className="text-xl font-bold text-calm-primary">{gameStats.currentXP} XP</p>
              </div>
           </div>
 
           <div className="mt-6">
               <div className="flex justify-between text-xs font-bold text-gray-400 mb-1">
-                  <span>Nivel {gameStats.level}</span>
+                  <span>Level {gameStats.level}</span>
                   <span>{Math.floor(gameStats.progressToNextLevel)}%</span>
-                  <span>Nivel {gameStats.level + 1}</span>
+                  <span>Level {gameStats.level + 1}</span>
               </div>
               <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden">
                   <div 
@@ -164,15 +164,15 @@ const ProfilePage = ({ user, onLogout }) => {
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <StatCard icon={Calendar} value={gameStats.totalEntries} label="Intrări Totale" color="blue" />
-        <StatCard icon={TrendingUp} value={`${gameStats.avgMood}%`} label="Stare Medie" color="green" />
-        <StatCard icon={Trophy} value={gameStats.badges.filter(b => gameStats.totalEntries >= b.threshold).length} label="Realizări" color="yellow" />
-        <StatCard icon={Target} value={gameStats.entriesNeeded > 0 ? gameStats.entriesNeeded : 0} label="Până la urm. insignă" color="red" />
+        <StatCard icon={Calendar} value={gameStats.totalEntries} label="Total Entries" color="blue" />
+        <StatCard icon={TrendingUp} value={`${gameStats.avgMood}%`} label="Avg Mood" color="green" />
+        <StatCard icon={Trophy} value={gameStats.badges.filter(b => gameStats.totalEntries >= b.threshold).length} label="Achievements" color="yellow" />
+        <StatCard icon={Target} value={gameStats.entriesNeeded > 0 ? gameStats.entriesNeeded : 0} label="Until next badge" color="red" />
       </div>
 
       <div>
         <h3 className="font-bold text-gray-700 mb-4 px-2 flex items-center gap-2">
-            <Award className="text-yellow-500" /> Colecția ta de Insigne
+            <Award className="text-yellow-500" /> Your Badge Collection
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {gameStats.badges.map(badge => {
@@ -195,7 +195,7 @@ const ProfilePage = ({ user, onLogout }) => {
 
       <div className="pt-4">
         <Button variant="ghost" onClick={onLogout} className="w-full text-red-400 hover:text-red-600 hover:bg-red-50">
-            <LogOut size={16} className="mr-2"/> Deconectare Cont
+            <LogOut size={16} className="mr-2"/> Logout Account
         </Button>
       </div>
 

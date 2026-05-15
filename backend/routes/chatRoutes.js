@@ -1,15 +1,11 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const {
-  createSession,
-  getSessionsByUser,
-  getMessagesBySession,
-  saveMessage,
-} = require("../controllers/chatController");
 
-router.post("/sessions", createSession);
-router.get("/sessions/:userId", getSessionsByUser);
-router.get("/messages/:sessionId", getMessagesBySession);
-router.post("/messages", saveMessage);
+const { sendMessage, getChatSessions, getSessionMessages, deleteChatSession } = require('../controllers/chatController');
+
+router.post('/message', sendMessage);
+router.get('/sessions/:userId', getChatSessions);
+router.get('/sessions/:sessionId/messages', getSessionMessages);
+router.delete('/sessions/:sessionId', deleteChatSession);
 
 module.exports = router;

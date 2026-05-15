@@ -30,10 +30,10 @@ const LandingPage = ({ onLogin }) => {
         body: JSON.stringify({ email, password }),
       });
       const data = await response.json();
-      if (!response.ok) throw new Error(data.error || 'A apărut o eroare');
+      if (!response.ok) throw new Error(data.error || 'An error occurred');
 
       if (!isLoginMode) {
-        alert("🎉 Cont creat cu succes! Te rugăm să te autentifici.");
+        alert("🎉 Account successfully created! Please log in.");
         setIsLoginMode(true);
       } else {
         onLogin(data.user);
@@ -74,23 +74,23 @@ const LandingPage = ({ onLogin }) => {
             <div>
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-md shadow-sm text-calm-primary font-bold text-sm mb-6 animate-fade-in">
                     <Sparkles size={16} />
-                    <span>Noua ta rutină de wellness mental</span>
+                    <span>Your new mental wellness routine</span>
                 </div>
                 <h1 className="text-5xl lg:text-7xl font-extrabold tracking-tight text-gray-900 leading-tight mb-6">
-                    Descoperă <br/>
+                    Discover <br/>
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-calm-primary via-purple-500 to-pink-500">
-                        Echilibrul Interior.
+                        Inner Balance.
                     </span>
                 </h1>
                 <p className="text-xl text-gray-600 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                    Mai mult decât un jurnal. Asistentul tău personal care te ajută să îți înțelegi emoțiile, să găsești resurse adaptate și să crești în fiecare zi.
+                    More than a journal. Your personal assistant that helps you understand your emotions, find tailored resources, and grow every day.
                 </p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
-                <FeatureBox icon={Brain} title="Inteligență Emoțională" desc="Înțelege-ți tiparele." />
-                <FeatureBox icon={LineChart} title="Progres Vizual" desc="Vezi evoluția clar." />
-                <FeatureBox icon={ShieldCheck} title="Spațiu Sigur 100%" desc="Datele tale sunt private." />
+                <FeatureBox icon={Brain} title="Emotional Intelligence" desc="Understand your patterns." />
+                <FeatureBox icon={LineChart} title="Visual Progress" desc="See your evolution clearly." />
+                <FeatureBox icon={ShieldCheck} title="100% Safe Space" desc="Your data is private." />
             </div>
         </div>
 
@@ -99,10 +99,10 @@ const LandingPage = ({ onLogin }) => {
                 
                 <div className="mb-8">
                     <h2 className="text-2xl font-bold text-gray-800 mb-2">
-                        {isLoginMode ? 'Bine ai revenit!' : 'Creează-ți contul'}
+                        {isLoginMode ? 'Welcome back!' : 'Create your account'}
                     </h2>
                     <p className="text-gray-500">
-                        {isLoginMode ? 'Continuă călătoria ta spre mindfulness.' : 'Durează mai puțin de un minut.'}
+                        {isLoginMode ? 'Continue your mindfulness journey.' : 'Takes less than a minute.'}
                     </p>
                 </div>
 
@@ -114,13 +114,13 @@ const LandingPage = ({ onLogin }) => {
                         onClick={() => setIsLoginMode(true)}
                         className={`flex-1 relative z-10 py-3 text-sm font-bold transition-colors duration-300 ${isLoginMode ? 'text-gray-800' : 'text-gray-500 hover:text-gray-700'}`}
                     >
-                        Autentificare
+                        Log In
                     </button>
                     <button 
                         onClick={() => setIsLoginMode(false)}
                         className={`flex-1 relative z-10 py-3 text-sm font-bold transition-colors duration-300 ${!isLoginMode ? 'text-gray-800' : 'text-gray-500 hover:text-gray-700'}`}
                     >
-                        Înregistrare
+                        Sign Up
                     </button>
                 </div>
 
@@ -131,7 +131,7 @@ const LandingPage = ({ onLogin }) => {
                 )}
 
                 <form onSubmit={handleAuth} className="space-y-5">
-                    <InputGroup icon={Mail} type="email" value={email} onChange={setEmail} placeholder="Adresa de email" />
+                    <InputGroup icon={Mail} type="email" value={email} onChange={setEmail} placeholder="Email address" />
                     
                     <div className="group relative transition-all duration-300 focus-within:scale-[1.02]">
                         <Lock className="absolute left-4 top-4 w-5 h-5 text-gray-400 group-focus-within:text-calm-primary transition-colors" />
@@ -140,7 +140,7 @@ const LandingPage = ({ onLogin }) => {
                             required
                             value={password}
                             onChange={(e) => setPassword(e.target.value)} 
-                            placeholder="Parola" 
+                            placeholder="Password" 
                             className="w-full bg-white/60 pl-12 pr-12 py-4 rounded-2xl border border-gray-200/80 outline-none focus:border-calm-primary focus:ring-4 focus:ring-calm-primary/10 transition-all placeholder:text-gray-400 text-gray-700 font-medium shadow-sm"
                         />
                         <button 
@@ -155,7 +155,7 @@ const LandingPage = ({ onLogin }) => {
                     {isLoginMode && (
                         <div className="flex justify-end">
                             <a href="#" className="text-sm font-semibold text-calm-primary hover:text-calm-accent transition-colors">
-                                Ai uitat parola?
+                                Forgot password?
                             </a>
                         </div>
                     )}
@@ -170,11 +170,11 @@ const LandingPage = ({ onLogin }) => {
                             {loading ? (
                                 <div className="flex items-center justify-center gap-2">
                                     <Loader2 className="animate-spin w-6 h-6" /> 
-                                    Se procesează...
+                                    Processing...
                                 </div>
                             ) : (
                                 <div className="flex items-center justify-center gap-3">
-                                    {isLoginMode ? 'Intră în aplicație' : 'Începe gratuit'}
+                                    {isLoginMode ? 'Enter app' : 'Start for free'}
                                     <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
                                 </div>
                             )}
@@ -184,7 +184,7 @@ const LandingPage = ({ onLogin }) => {
                 
                 <div className="mt-8 text-center bg-gray-50/80 mx-auto py-3 px-4 rounded-full w-fit shadow-sm border border-white/50 backdrop-blur-md">
                      <p className="text-xs text-gray-500 font-medium flex items-center gap-2">
-                        <ShieldCheck size={14} className="text-green-500"/> Datele tale sunt criptate și sigure.
+                        <ShieldCheck size={14} className="text-green-500"/> Your data is encrypted and secure.
                      </p>
                 </div>
 

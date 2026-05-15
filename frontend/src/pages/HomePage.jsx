@@ -9,64 +9,64 @@ import Card from '../components/Card';
 const SLIDES = [
   {
     id: 1,
-    title: "Bun venit pe Reflect",
-    desc: "Noul tău spațiu pentru claritate mentală și echilibru interior.",
+    title: "Welcome to Reflect",
+    desc: "Your new space for mental clarity and inner balance.",
     bg: "from-indigo-500 to-purple-600"
   },
   {
     id: 2,
-    title: "Modulul 'Respiro' este aici",
-    desc: "Încearcă exercițiul de respirație ghidată de mai jos pentru calm instantaneu.",
+    title: "The 'Breathe' module is here",
+    desc: "Try the guided breathing exercise below for instant calm.",
     bg: "from-teal-400 to-emerald-600"
   },
   {
     id: 3,
-    title: "Știința din spatele liniștii",
-    desc: "Află cum 5 minute de jurnal pe zi îți pot reconfigura creierul pozitiv.",
+    title: "The science behind stillness",
+    desc: "Find out how 5 minutes of journaling a day can positively rewire your brain.",
     bg: "from-orange-400 to-rose-500"
   }
 ];
 
 const QUOTES = [
-  "Nu trebuie să controlezi furtuna, ci doar să îți calmezi mintea în timp ce trece.",
-  "Reflecția este oglinda în care sufletul își vede adevărata față.",
-  "Respirația este ancora care te aduce înapoi în prezent.",
-  "Ești mai puternic decât crezi și mai curajos decât simți.",
-  "Pacea vine din interior. Nu o căuta în afara ta.",
-  "O zi proastă nu înseamnă o viață proastă."
+  "You don't have to control the storm, just calm your mind as it passes.",
+  "Reflection is the mirror in which the soul sees its true face.",
+  "Breath is the anchor that brings you back to the present.",
+  "You are stronger than you think and braver than you feel.",
+  "Peace comes from within. Do not seek it without.",
+  "A bad day doesn't mean a bad life."
 ];
 
 const RESOURCE_SETS = [
   {
-    theme: "Relaxare & Calm",
+    theme: "Relax & Calm",
     items: [
-      { icon: Music, color: "blue", title: "Sunetul Ploii", type: "Audio", sub: "Ambiental (3 ore)", link: "https://www.youtube.com/watch?v=mPZkdNFkNps" },
-      { icon: BookOpen, color: "green", title: "Cum să oprești timpul", type: "Carte", sub: "Matt Haig", link: "https://books.google.ro/books?id=Matt+Haig" },
-      { icon: Video, color: "purple", title: "Respirație 4-7-8", type: "Video", sub: "Tehnică Ghidată", link: "https://www.youtube.com/watch?v=UXw6507cbaU" },
-      { icon: Newspaper, color: "orange", title: "Beneficiile liniștii", type: "Articol", sub: "Lectură 5 min", link: "https://www.reginamaria.ro/articole-medicale/beneficiile-sanatatii-mintale" }
+      { icon: Music, color: "blue", title: "Rain Sounds", type: "Audio", sub: "Ambient (3 hours)", link: "https://www.youtube.com/watch?v=mPZkdNFkNps" },
+      { icon: BookOpen, color: "green", title: "How to stop time", type: "Book", sub: "Matt Haig", link: "https://books.google.ro/books?id=Matt+Haig" },
+      { icon: Video, color: "purple", title: "4-7-8 Breathing", type: "Video", sub: "Guided Technique", link: "https://www.youtube.com/watch?v=UXw6507cbaU" },
+      { icon: Newspaper, color: "orange", title: "Benefits of silence", type: "Article", sub: "5 min read", link: "https://www.reginamaria.ro/articole-medicale/beneficiile-sanatatii-mintale" }
     ]
   },
   {
-    theme: "Motivație & Energie",
+    theme: "Motivation & Energy",
     items: [
       { icon: Music, color: "red", title: "Lofi Beats Work", type: "Audio", sub: "Focus Flow", link: "https://www.youtube.com/watch?v=jfKfPfyJRdk" },
-      { icon: BookOpen, color: "blue", title: "Atomic Habits", type: "Carte", sub: "James Clear", link: "https://www.google.ro/books/edition/Atomic_Habits/XfFvDwAAQBAJ" },
-      { icon: Video, color: "orange", title: "TED: Cum să reușești", type: "Video", sub: "Inspirațional", link: "https://www.youtube.com/watch?v=Lp7E973zozc" },
-      { icon: Newspaper, color: "green", title: "Organizare Mentală", type: "Articol", sub: "Productivitate", link: "https://www.dor.ro/" }
+      { icon: BookOpen, color: "blue", title: "Atomic Habits", type: "Book", sub: "James Clear", link: "https://www.google.ro/books/edition/Atomic_Habits/XfFvDwAAQBAJ" },
+      { icon: Video, color: "orange", title: "TED: How to succeed", type: "Video", sub: "Inspirational", link: "https://www.youtube.com/watch?v=Lp7E973zozc" },
+      { icon: Newspaper, color: "green", title: "Mental Organization", type: "Article", sub: "Productivity", link: "https://www.dor.ro/" }
     ]
   },
   {
-    theme: "Somn & Refacere",
+    theme: "Sleep & Recovery",
     items: [
-      { icon: Music, color: "purple", title: "Frecvențe Delta", type: "Audio", sub: "Somn profund", link: "https://www.youtube.com/watch?v=xQ6xgDI7Whc" },
-      { icon: BookOpen, color: "blue", title: "De ce dormim", type: "Carte", sub: "Matthew Walker", link: "https://books.google.ro/books/about/Why_We_Sleep.html" },
-      { icon: Video, color: "blue", title: "Yoga pentru somn", type: "Video", sub: "Stretching ușor", link: "https://www.youtube.com/watch?v=BiWDsfZ3zbo" },
-      { icon: Newspaper, color: "red", title: "Igiena somnului", type: "Articol", sub: "Ghid practic", link: "https://www.reginamaria.ro/articole-medicale/igiena-somnului" }
+      { icon: Music, color: "purple", title: "Delta Frequencies", type: "Audio", sub: "Deep sleep", link: "https://www.youtube.com/watch?v=xQ6xgDI7Whc" },
+      { icon: BookOpen, color: "blue", title: "Why we sleep", type: "Book", sub: "Matthew Walker", link: "https://books.google.ro/books/about/Why_We_Sleep.html" },
+      { icon: Video, color: "blue", title: "Yoga for sleep", type: "Video", sub: "Light stretching", link: "https://www.youtube.com/watch?v=BiWDsfZ3zbo" },
+      { icon: Newspaper, color: "red", title: "Sleep hygiene", type: "Article", sub: "Practical guide", link: "https://www.reginamaria.ro/articole-medicale/igiena-somnului" }
     ]
   }
 ];
 
-const INTENTIONS = ["Liniște", "Recunoștință", "Energie", "Focus", "Vindecare"];
+const INTENTIONS = ["Peace", "Gratitude", "Energy", "Focus", "Healing"];
 
 const HomePage = ({ user }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -74,7 +74,7 @@ const HomePage = ({ user }) => {
   const [selectedIntention, setSelectedIntention] = useState(null);
 
   const [isBreathing, setIsBreathing] = useState(false);
-  const [breathText, setBreathText] = useState("Inspiră");
+  const [breathText, setBreathText] = useState("Inhale");
   const [breathScale, setBreathScale] = useState(1); 
 
   useEffect(() => {
@@ -90,16 +90,16 @@ const HomePage = ({ user }) => {
   useEffect(() => {
     let interval;
     if (isBreathing) {
-      setBreathText("Inspiră...");
+      setBreathText("Inhale...");
       setBreathScale(1.5);
       
       interval = setInterval(() => {
         setBreathScale((prev) => {
           if (prev === 1) {
-            setBreathText("Inspiră...");
+            setBreathText("Inhale...");
             return 1.5;
           } else {
-            setBreathText("Expiră...");
+            setBreathText("Exhale...");
             return 1;
           }
         });
@@ -129,12 +129,10 @@ const HomePage = ({ user }) => {
       
       <div className="flex flex-col md:flex-row justify-between items-end gap-4 mb-2">
         <div>
-          <h1 className="text-3xl font-bold text-gray-800">Bună, {user.email.split('@')[0]}</h1>
-          <p className="text-gray-500">Bine ai revenit pe <span className="font-bold text-calm-primary">Reflect</span>.</p>
+          <h1 className="text-3xl font-bold text-gray-800">Hello, {user.email.split('@')[0]}</h1>
+          <p className="text-gray-500">Welcome back to <span className="font-bold text-calm-primary">Reflect</span>.</p>
         </div>
-        <div className="text-right hidden md:block">
-           <p className="text-xs text-gray-400 font-medium uppercase tracking-wider">{new Date().toLocaleDateString('ro-RO', { weekday: 'long', month: 'long', day: 'numeric' })}</p>
-        </div>
+           <p className="text-xs text-gray-400 font-medium uppercase tracking-wider">{new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</p>
       </div>
 
       <div className={`relative rounded-[2rem] overflow-hidden shadow-2xl h-72 transition-all duration-1000 bg-gradient-to-br ${SLIDES[currentSlide].bg}`}>
@@ -171,7 +169,7 @@ const HomePage = ({ user }) => {
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-teal-400 to-emerald-500"></div>
           <div className="flex items-center gap-2 mb-6 w-full text-left">
              <div className="p-2 bg-teal-50 rounded-full text-teal-600"><Wind size={18}/></div>
-             <h3 className="font-bold text-gray-700">Respiro</h3>
+             <h3 className="font-bold text-gray-700">Breathe</h3>
           </div>
 
           <div className="relative w-32 h-32 flex items-center justify-center mb-4">
@@ -189,7 +187,7 @@ const HomePage = ({ user }) => {
              </button>
           </div>
           
-          <p className="text-sm font-medium text-teal-800 transition-all duration-500">{isBreathing ? breathText : "Ia o pauză de 1 minut"}</p>
+          <p className="text-sm font-medium text-teal-800 transition-all duration-500">{isBreathing ? breathText : "Take a 1-minute break"}</p>
         </div>
 
         <div className="lg:col-span-2 bg-white rounded-3xl p-6 shadow-sm border border-gray-100 relative hover:shadow-md transition-shadow">
@@ -197,12 +195,12 @@ const HomePage = ({ user }) => {
           <div className="flex items-center justify-between mb-4">
              <div className="flex items-center gap-2">
                 <div className="p-2 bg-purple-50 rounded-full text-purple-600"><Target size={18}/></div>
-                <h3 className="font-bold text-gray-700">Intenția Zilei</h3>
+                <h3 className="font-bold text-gray-700">Intention of the Day</h3>
              </div>
-             {selectedIntention && <span className="text-xs font-bold text-green-600 flex items-center gap-1"><Check size={12}/> Setat</span>}
+             {selectedIntention && <span className="text-xs font-bold text-green-600 flex items-center gap-1"><Check size={12}/> Set</span>}
           </div>
 
-          <p className="text-sm text-gray-500 mb-4">Pe ce vrei să te concentrezi astăzi? Alege un cuvânt care să te ghideze.</p>
+          <p className="text-sm text-gray-500 mb-4">What do you want to focus on today? Choose a word to guide you.</p>
 
           <div className="flex flex-wrap gap-3">
             {INTENTIONS.map((intent) => (
@@ -225,7 +223,7 @@ const HomePage = ({ user }) => {
         <Quote className="absolute right-6 top-6 text-white/10 w-32 h-32 rotate-12" />
         <div className="relative z-10 p-2">
           <div className="flex justify-between items-center mb-4">
-             <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest">Reflecția Zilei</h3>
+             <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest">Daily Reflection</h3>
           </div>
           <p className="text-white italic text-2xl font-light leading-relaxed tracking-wide">
             "{dailyQuote}"
@@ -237,11 +235,11 @@ const HomePage = ({ user }) => {
         <div className="flex items-center justify-between mb-6">
             <div>
                 <h3 className="font-bold text-gray-800 text-xl flex items-center gap-2">
-                  Colecția de astăzi
+                  Today's Collection
                   <Sparkles className="w-5 h-5 text-yellow-500 fill-yellow-500 animate-pulse" />
                 </h3>
                 <p className="text-sm text-gray-500 mt-1">
-                   Tematică: <span className="text-calm-primary font-bold">{dailyResources.theme}</span>
+                   Theme: <span className="text-calm-primary font-bold">{dailyResources.theme}</span>
                 </p>
             </div>
         </div>

@@ -15,15 +15,15 @@ const ChatSidebar = ({
         className="w-full mb-4 px-4 py-3 rounded-2xl bg-gray-900 text-white text-sm font-medium flex items-center justify-center gap-2 hover:bg-gray-800 transition"
       >
         <MessageSquarePlus size={16} />
-        Chat nou
+        New chat
       </button>
 
       <div className="flex-1 overflow-y-auto pr-1 space-y-2 custom-scrollbar">
         {loadingSessions ? (
-          <div className="text-sm text-gray-400">Se încarcă istoricul...</div>
+          <div className="text-sm text-gray-400">Loading history...</div>
         ) : sessions.length === 0 ? (
           <div className="text-sm text-gray-400">
-            Nu există conversații încă.
+            No conversations yet.
           </div>
         ) : (
           sessions.map((session) => {
@@ -56,7 +56,7 @@ const ChatSidebar = ({
 
                       {session.title === "New Chat" && (
                         <span className="px-2 py-0.5 rounded-full bg-gray-200 text-gray-600 text-[10px] font-medium">
-                          üres
+                          empty
                         </span>
                       )}
                     </div>
